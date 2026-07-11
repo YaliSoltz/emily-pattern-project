@@ -8,13 +8,13 @@ export type Slide = {
 
 export const slides: Slide[] = [
   {
-    hero: "/images/gallery-1a.svg",
-    detail: "/images/gallery-1b.svg",
+    hero: "/images/gallery-1a.jpg",
+    detail: "/images/gallery-1b.jpg",
     caption: "Letters — I",
   },
   {
-    hero: "/images/gallery-2a.svg",
-    detail: "/images/gallery-2b.svg",
+    hero: "/images/gallery-2a.jpg",
+    detail: "/images/gallery-2b.jpg",
     caption: "Postage & Stamps — II",
   },
   {

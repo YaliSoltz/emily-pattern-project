@@ -8,7 +8,7 @@ export default function Hero() {
     <section className={styles.hero} aria-label="Introduction">
       <div className={styles.media}>
         <Image
-          src="/images/hero.svg"
+          src="/images/hero.jpg"
           alt="Textile print from the Threads of Correspondence collection"
           fill
           priority
