@@ -34,12 +34,6 @@
 .track {
   display: flex;
   transition: transform 0.9s var(--ease);
-  touch-action: pan-y;
-  cursor: grab;
-}
-
-.track:active {
-  cursor: grabbing;
 }
 
 .slide {
@@ -196,7 +190,7 @@
   }
 }
 
-/* ---- zoom overlay: shows the hero + detail pair enlarged together ---- */
+/* ---- zoom overlay: both prints of the pair, enlarged together ---- */
 .zoomOverlay {
   position: fixed;
   inset: 0;
@@ -205,17 +199,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1.25rem, 3vh, 2rem);
-  padding: clamp(2rem, 6vh, 3.5rem) clamp(1.25rem, 5vw, 3rem);
-  background: rgba(26, 11, 15, 0.94);
-  cursor: zoom-out;
-  animation: zoomFadeIn 0.5s var(--ease) forwards;
+  background: rgba(26, 11, 15, 0.96);
+  animation: zoomFadeIn 0.4s var(--ease) forwards;
 }
 
 .zoomClose {
   position: absolute;
   top: clamp(1rem, 3vh, 2rem);
   right: clamp(1rem, 4vw, 2.5rem);
+  z-index: 1;
   appearance: none;
   background: none;
   border: 1px solid rgba(247, 242, 234, 0.4);
@@ -233,20 +225,48 @@
   border-color: #f7f2ea;
 }
 
+.zoomArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  appearance: none;
+  background: none;
+  border: 1px solid rgba(247, 242, 234, 0.4);
+  color: #f7f2ea;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
+}
+
+.zoomArrow:hover {
+  background: rgba(247, 242, 234, 0.1);
+  border-color: #f7f2ea;
+}
+
+.zoomArrowPrev {
+  left: clamp(0.75rem, 3vw, 2rem);
+}
+
+.zoomArrowNext {
+  right: clamp(0.75rem, 3vw, 2rem);
+}
+
 .zoomPair {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: clamp(1.5rem, 4vw, 3rem);
-  max-width: 92vw;
+  max-width: 82vw;
   max-height: 76vh;
-  cursor: default;
 }
 
 .zoomHero {
   position: relative;
-  height: min(70vh, 56vw);
+  height: min(70vh, 52vw);
   width: auto;
   aspect-ratio: 1 / 1;
   background: var(--line);
@@ -254,17 +274,18 @@
 
 .zoomDetail {
   position: relative;
-  height: min(42vh, 34vw);
+  height: min(40vh, 30vw);
   width: auto;
   aspect-ratio: 1 / 1;
   background: var(--line);
 }
 
 .zoomCaption {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: clamp(1rem, 2vw, 1.35rem);
-  color: rgba(247, 242, 234, 0.85);
+  margin-top: clamp(1rem, 3vh, 1.75rem);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  color: rgba(247, 242, 234, 0.75);
 }
 
 @keyframes zoomFadeIn {
@@ -278,10 +299,14 @@
 
 @media (max-width: 640px) {
   .zoomHero {
-    height: min(46vh, 82vw);
+    height: 46vh;
   }
   .zoomDetail {
-    height: min(28vh, 50vw);
+    height: 26vh;
+  }
+  .zoomArrow {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 

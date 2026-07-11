@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { slides } from "@/lib/gallery";
 import FadeIn from "./FadeIn";
 import styles from "./GalleryCarousel.module.css";
@@ -9,29 +9,6 @@ import styles from "./GalleryCarousel.module.css";
 export default function GalleryCarousel() {
   const [index, setIndex] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  // drag state
-  const drag = useRef({ active: false, startX: 0, moved: 0 });
-
-  // click-to-zoom is suppressed if the pointer actually dragged
-  const openZoom = useCallback(() => {
-    if (Math.abs(drag.current.moved) < 8) setZoomOpen(true);
-  }, []);
-
-  useEffect(() => {
-    if (!zoomOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setZoomOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [zoomOpen]);
 
   const clamp = useCallback(
     (i: number) => Math.max(0, Math.min(slides.length - 1, i)),
@@ -46,25 +23,23 @@ export default function GalleryCarousel() {
   const next = useCallback(() => setIndex((i) => clamp(i + 1)), [clamp]);
   const prev = useCallback(() => setIndex((i) => clamp(i - 1)), [clamp]);
 
-  const onPointerDown = (e: React.PointerEvent) => {
-    drag.current = { active: true, startX: e.clientX, moved: 0 };
-    trackRef.current?.setPointerCapture(e.pointerId);
-  };
+  const closeZoom = useCallback(() => setZoomOpen(false), []);
 
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!drag.current.active) return;
-    drag.current.moved = e.clientX - drag.current.startX;
-  };
-
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (!drag.current.active) return;
-    const { moved } = drag.current;
-    drag.current.active = false;
-    trackRef.current?.releasePointerCapture(e.pointerId);
-    const threshold = 60;
-    if (moved <= -threshold) next();
-    else if (moved >= threshold) prev();
-  };
+  useEffect(() => {
+    if (!zoomOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeZoom();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [zoomOpen, closeZoom, next, prev]);
 
   return (
     <section className={styles.section} id="collection" aria-label="Collection gallery">
@@ -76,15 +51,7 @@ export default function GalleryCarousel() {
       </div>
 
       <FadeIn className={styles.viewport}>
-        <div
-          ref={trackRef}
-          className={styles.track}
-          style={{ transform: `translateX(-${index * 100}%)` }}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerCancel={onPointerUp}
-        >
+        <div className={styles.track} style={{ transform: `translateX(-${index * 100}%)` }}>
           {slides.map((slide, i) => (
             <div className={styles.slide} key={slide.hero} aria-hidden={i !== index}>
               <figure className={styles.pair}>
@@ -93,7 +60,7 @@ export default function GalleryCarousel() {
                   role="button"
                   tabIndex={0}
                   aria-label={`Enlarge ${slide.caption}`}
-                  onClick={openZoom}
+                  onClick={() => setZoomOpen(true)}
                   onKeyDown={(e) => e.key === "Enter" && setZoomOpen(true)}
                 >
                   <Image
@@ -109,8 +76,8 @@ export default function GalleryCarousel() {
                   className={styles.detail}
                   role="button"
                   tabIndex={0}
-                  aria-label={`Enlarge ${slide.caption}`}
-                  onClick={openZoom}
+                  aria-label={`Enlarge ${slide.caption} detail`}
+                  onClick={() => setZoomOpen(true)}
                   onKeyDown={(e) => e.key === "Enter" && setZoomOpen(true)}
                 >
                   <Image
@@ -190,18 +157,31 @@ export default function GalleryCarousel() {
           role="dialog"
           aria-modal="true"
           aria-label={`${slides[index].caption} — enlarged view`}
-          onClick={() => setZoomOpen(false)}
+          onClick={closeZoom}
         >
           <button
             type="button"
             className={styles.zoomClose}
             onClick={(e) => {
               e.stopPropagation();
-              setZoomOpen(false);
+              closeZoom();
             }}
             aria-label="Close enlarged view"
           >
             &times;
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.zoomArrow} ${styles.zoomArrowPrev}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            disabled={index === 0}
+            aria-label="Previous print"
+          >
+            &larr;
           </button>
 
           <div className={styles.zoomPair} onClick={(e) => e.stopPropagation()}>
@@ -212,6 +192,7 @@ export default function GalleryCarousel() {
                 fill
                 sizes="90vw"
                 className={styles.img}
+                priority
               />
             </div>
             <div className={styles.zoomDetail}>
@@ -221,9 +202,23 @@ export default function GalleryCarousel() {
                 fill
                 sizes="60vw"
                 className={styles.img}
+                priority
               />
             </div>
           </div>
+
+          <button
+            type="button"
+            className={`${styles.zoomArrow} ${styles.zoomArrowNext}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            disabled={index === slides.length - 1}
+            aria-label="Next print"
+          >
+            &rarr;
+          </button>
 
           <p className={styles.zoomCaption}>{slides[index].caption}</p>
         </div>
