@@ -1,17 +1,37 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { slides } from "@/lib/gallery";
 import FadeIn from "./FadeIn";
 import styles from "./GalleryCarousel.module.css";
 
 export default function GalleryCarousel() {
   const [index, setIndex] = useState(0);
+  const [zoomOpen, setZoomOpen] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
 
   // drag state
   const drag = useRef({ active: false, startX: 0, moved: 0 });
+
+  // click-to-zoom is suppressed if the pointer actually dragged
+  const openZoom = useCallback(() => {
+    if (Math.abs(drag.current.moved) < 8) setZoomOpen(true);
+  }, []);
+
+  useEffect(() => {
+    if (!zoomOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoomOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [zoomOpen]);
 
   const clamp = useCallback(
     (i: number) => Math.max(0, Math.min(slides.length - 1, i)),
@@ -68,7 +88,14 @@ export default function GalleryCarousel() {
           {slides.map((slide, i) => (
             <div className={styles.slide} key={slide.hero} aria-hidden={i !== index}>
               <figure className={styles.pair}>
-                <div className={styles.hero}>
+                <div
+                  className={styles.hero}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Enlarge ${slide.caption}`}
+                  onClick={openZoom}
+                  onKeyDown={(e) => e.key === "Enter" && setZoomOpen(true)}
+                >
                   <Image
                     src={slide.hero}
                     alt={`${slide.caption} — principal print`}
@@ -78,7 +105,14 @@ export default function GalleryCarousel() {
                     draggable={false}
                   />
                 </div>
-                <div className={styles.detail}>
+                <div
+                  className={styles.detail}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Enlarge ${slide.caption}`}
+                  onClick={openZoom}
+                  onKeyDown={(e) => e.key === "Enter" && setZoomOpen(true)}
+                >
                   <Image
                     src={slide.detail}
                     alt={`${slide.caption} — detail`}
@@ -149,6 +183,51 @@ export default function GalleryCarousel() {
           ))}
         </div>
       </div>
+
+      {zoomOpen && (
+        <div
+          className={styles.zoomOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${slides[index].caption} — enlarged view`}
+          onClick={() => setZoomOpen(false)}
+        >
+          <button
+            type="button"
+            className={styles.zoomClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              setZoomOpen(false);
+            }}
+            aria-label="Close enlarged view"
+          >
+            &times;
+          </button>
+
+          <div className={styles.zoomPair} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.zoomHero}>
+              <Image
+                src={slides[index].hero}
+                alt={`${slides[index].caption} — principal print`}
+                fill
+                sizes="90vw"
+                className={styles.img}
+              />
+            </div>
+            <div className={styles.zoomDetail}>
+              <Image
+                src={slides[index].detail}
+                alt={`${slides[index].caption} — detail`}
+                fill
+                sizes="60vw"
+                className={styles.img}
+              />
+            </div>
+          </div>
+
+          <p className={styles.zoomCaption}>{slides[index].caption}</p>
+        </div>
+      )}
     </section>
   );
 }

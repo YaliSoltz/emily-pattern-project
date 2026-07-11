@@ -66,6 +66,7 @@
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--line);
+  cursor: zoom-in;
 }
 
 .detail {
@@ -77,6 +78,7 @@
   align-self: flex-end;
   overflow: hidden;
   background: var(--line);
+  cursor: zoom-in;
 }
 
 .img {
@@ -191,5 +193,100 @@
 @media (prefers-reduced-motion: reduce) {
   .track {
     transition: none;
+  }
+}
+
+/* ---- zoom overlay: shows the hero + detail pair enlarged together ---- */
+.zoomOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.25rem, 3vh, 2rem);
+  padding: clamp(2rem, 6vh, 3.5rem) clamp(1.25rem, 5vw, 3rem);
+  background: rgba(26, 11, 15, 0.94);
+  cursor: zoom-out;
+  animation: zoomFadeIn 0.5s var(--ease) forwards;
+}
+
+.zoomClose {
+  position: absolute;
+  top: clamp(1rem, 3vh, 2rem);
+  right: clamp(1rem, 4vw, 2.5rem);
+  appearance: none;
+  background: none;
+  border: 1px solid rgba(247, 242, 234, 0.4);
+  color: #f7f2ea;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
+}
+
+.zoomClose:hover {
+  background: rgba(247, 242, 234, 0.1);
+  border-color: #f7f2ea;
+}
+
+.zoomPair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  max-width: 92vw;
+  max-height: 76vh;
+  cursor: default;
+}
+
+.zoomHero {
+  position: relative;
+  height: min(70vh, 56vw);
+  width: auto;
+  aspect-ratio: 1 / 1;
+  background: var(--line);
+}
+
+.zoomDetail {
+  position: relative;
+  height: min(42vh, 34vw);
+  width: auto;
+  aspect-ratio: 1 / 1;
+  background: var(--line);
+}
+
+.zoomCaption {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  color: rgba(247, 242, 234, 0.85);
+}
+
+@keyframes zoomFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .zoomHero {
+    height: min(46vh, 82vw);
+  }
+  .zoomDetail {
+    height: min(28vh, 50vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoomOverlay {
+    animation: none;
   }
 }
