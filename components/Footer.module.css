@@ -1,0 +1,24 @@
+.footer {
+  border-top: 1px solid var(--line);
+  padding: clamp(3rem, 8vh, 5rem) 0;
+}
+
+.inner {
+  text-align: center;
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  margin-bottom: 1rem;
+}
+
+.meta {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 2.2;
+}

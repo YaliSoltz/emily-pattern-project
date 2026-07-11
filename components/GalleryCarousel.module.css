@@ -1,0 +1,182 @@
+.section {
+  padding: clamp(4rem, 10vh, 8rem) 0 clamp(5rem, 12vh, 9rem);
+}
+
+.head {
+  margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+}
+
+/* ---- viewport / track ---- */
+.viewport {
+  overflow: hidden;
+  padding: 0 clamp(1.5rem, 5vw, 5rem);
+}
+
+.track {
+  display: flex;
+  transition: transform 0.9s var(--ease);
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.track:active {
+  cursor: grabbing;
+}
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 70fr 30fr;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+  margin: 0 auto;
+  max-width: var(--maxw);
+}
+
+.hero {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.detail {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  align-self: center;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.img {
+  object-fit: cover;
+  user-select: none;
+}
+
+/* ---- controls ---- */
+.controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.captionRow {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+
+.caption {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--ink);
+}
+
+.count {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  color: var(--muted);
+}
+
+.arrows {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.arrow {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  width: 3rem;
+  height: 3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease),
+    border-color 0.5s var(--ease), opacity 0.4s var(--ease);
+}
+
+.arrow:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ---- thumbnails (preview uses hero image) ---- */
+.thumbs {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+  flex-wrap: wrap;
+}
+
+.thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(58px, 8vw, 84px);
+  aspect-ratio: 4 / 3;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  background: var(--line);
+  opacity: 0.45;
+  transition: opacity 0.5s var(--ease);
+}
+
+.thumb:hover {
+  opacity: 0.8;
+}
+
+.thumbActive {
+  opacity: 1;
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+  .detail {
+    display: none;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transition: none;
+  }
+}

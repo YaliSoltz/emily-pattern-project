@@ -1,0 +1,32 @@
+.about {
+  padding: clamp(6rem, 16vh, 12rem) 0;
+}
+
+.inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  margin-bottom: 2.25rem;
+}
+
+.body {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.9;
+  color: #6b3a44;
+  font-weight: 300;
+}

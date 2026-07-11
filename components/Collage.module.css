@@ -1,0 +1,77 @@
+.section {
+  padding: clamp(2rem, 6vh, 5rem) 0 clamp(6rem, 14vh, 11rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(1rem, 3vw, 2.75rem);
+}
+
+.item {
+  position: relative;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 1.4s var(--ease);
+}
+
+.item:hover .img {
+  transform: scale(1.04);
+}
+
+/* asymmetric composition */
+.large {
+  grid-column: 1 / 8;
+  grid-row: 1 / 2;
+  aspect-ratio: 4 / 3;
+}
+
+.tall {
+  grid-column: 8 / 13;
+  grid-row: 1 / 2;
+  aspect-ratio: 3 / 4;
+}
+
+.square {
+  grid-column: 1 / 5;
+  grid-row: 2 / 3;
+  aspect-ratio: 1 / 1;
+}
+
+.wide {
+  grid-column: 5 / 13;
+  grid-row: 2 / 3;
+  aspect-ratio: 21 / 9;
+}
+
+@media (max-width: 720px) {
+  .large,
+  .tall,
+  .square,
+  .wide {
+    grid-column: 1 / 13;
+    grid-row: auto;
+  }
+  .large {
+    aspect-ratio: 4 / 3;
+  }
+  .tall {
+    aspect-ratio: 3 / 4;
+  }
+  .square {
+    aspect-ratio: 1 / 1;
+  }
+  .wide {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item:hover .img {
+    transform: none;
+  }
+}
