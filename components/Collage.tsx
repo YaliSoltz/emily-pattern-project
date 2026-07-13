@@ -3,10 +3,10 @@ import FadeIn from "./FadeIn";
 import styles from "./Collage.module.css";
 
 const pieces = [
-  { src: "/images/collage-1.jpg", cls: "large", alt: "Threads of Correspondence — editorial study I" },
-  { src: "/images/collage-2.jpg", cls: "tall", alt: "Threads of Correspondence — editorial study II" },
-  { src: "/images/collage-3.jpg", cls: "square", alt: "Threads of Correspondence — editorial study III" },
-  { src: "/images/collage-4.jpg", cls: "wide", alt: "Threads of Correspondence — editorial study IV" },
+  { src: "/images/collage-1.jpg", cls: "primary", alt: "Threads of Correspondence — editorial study I" },
+  { src: "/images/collage-2.jpg", cls: "secondary", alt: "Threads of Correspondence — editorial study II" },
+  { src: "/images/collage-3.jpg", cls: "tertiary", alt: "Threads of Correspondence — editorial study III" },
+  { src: "/images/collage-4.jpg", cls: "quaternary", alt: "Threads of Correspondence — editorial study IV" },
 ] as const;
 
 export default function Collage() {

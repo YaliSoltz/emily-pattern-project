@@ -1,25 +1,18 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Noto_Sans_Hebrew } from "next/font/google";
 import "./globals.css";
 
-const serif = Cormorant_Garamond({
-  subsets: ["latin"],
+const hebrew = Noto_Sans_Hebrew({
+  subsets: ["hebrew", "latin"],
   weight: ["300", "400", "500", "600"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const sans = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-sans",
+  variable: "--font-hebrew",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Threads of Correspondence — Emily Kryzewski",
+  title: "Pattern collection — Emily Kryzewski",
   description:
-    "Threads of Correspondence — a textile collection by Emily Kryzewski, reinterpreting the handwritten letters, stamps and postal marks of pre-digital communication into contemporary scarf prints for Marni.",
+    "Pattern collection — a textile collection by Emily Kryzewski, reinterpreting the handwritten letters, stamps and postal marks of pre-digital communication into contemporary scarf prints for Marni.",
 };
 
 export default function RootLayout({
@@ -28,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={hebrew.variable}>
       <body>{children}</body>
     </html>
   );

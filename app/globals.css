@@ -5,8 +5,8 @@
   --line: #e2d9cb;
   --maxw: 1280px;
 
-  --font-serif: Georgia, "Times New Roman", serif;
-  --font-sans: system-ui, sans-serif;
+  --font-serif: var(--font-hebrew), Georgia, serif;
+  --font-sans: var(--font-hebrew), system-ui, sans-serif;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -66,7 +66,7 @@ h3 {
 .eyebrow {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 0.72rem;
+  font-size: clamp(0.72rem, 0.72vw, 1.08rem);
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--muted);

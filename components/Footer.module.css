@@ -16,7 +16,7 @@
 
 .meta {
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: clamp(0.72rem, 0.72vw, 1.08rem);
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--muted);

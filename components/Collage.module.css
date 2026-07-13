@@ -6,16 +6,21 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(1rem, 3vw, 2.75rem);
+  align-items: start;
 }
 
+/* every source photo is a ~3:4 portrait crop; showing the full image means
+   fixing the box to that ratio and using object-fit: contain (never cover) —
+   asymmetry comes from varying each item's column span, not its shape */
 .item {
   position: relative;
   overflow: hidden;
-  background: var(--line);
+  background: var(--bg);
+  aspect-ratio: 3 / 4;
 }
 
 .img {
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 1.4s var(--ease);
 }
 
@@ -23,50 +28,35 @@
   transform: scale(1.04);
 }
 
-/* asymmetric composition */
-.large {
+/* row 1: large + small, small sits lower for an editorial stagger */
+.primary {
   grid-column: 1 / 8;
-  grid-row: 1 / 2;
-  aspect-ratio: 4 / 3;
+  align-self: start;
 }
 
-.tall {
+.secondary {
   grid-column: 8 / 13;
-  grid-row: 1 / 2;
-  aspect-ratio: 3 / 4;
+  align-self: end;
 }
 
-.square {
-  grid-column: 1 / 5;
-  grid-row: 2 / 3;
-  aspect-ratio: 1 / 1;
+/* row 2: mirrored — small + large */
+.tertiary {
+  grid-column: 1 / 6;
+  align-self: start;
 }
 
-.wide {
-  grid-column: 5 / 13;
-  grid-row: 2 / 3;
-  aspect-ratio: 21 / 9;
+.quaternary {
+  grid-column: 6 / 13;
+  align-self: start;
 }
 
 @media (max-width: 720px) {
-  .large,
-  .tall,
-  .square,
-  .wide {
+  .primary,
+  .secondary,
+  .tertiary,
+  .quaternary {
     grid-column: 1 / 13;
-    grid-row: auto;
-  }
-  .large {
-    aspect-ratio: 4 / 3;
-  }
-  .tall {
-    aspect-ratio: 3 / 4;
-  }
-  .square {
-    aspect-ratio: 1 / 1;
-  }
-  .wide {
-    aspect-ratio: 16 / 9;
+    align-self: start;
   }
 }
 

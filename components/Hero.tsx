@@ -19,14 +19,10 @@ export default function Hero() {
       </div>
 
       <div className={styles.overlay}>
-        <p className={styles.eyebrow}>A Textile Collection for Marni</p>
+        <p className={styles.eyebrow}>A Pattern Collection for Marni</p>
         <h1 className={styles.name}>Emily Kryzewski</h1>
-        <p className={styles.title}>Threads of Correspondence</p>
       </div>
 
-      <div className={styles.scroll} aria-hidden="true">
-        <span>Scroll</span>
-      </div>
     </section>
   );
 }

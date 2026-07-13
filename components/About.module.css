@@ -9,24 +9,29 @@
 }
 
 .eyebrow {
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 0.72rem;
+  font-family: var(--font-hebrew);
+  font-weight: 500;
+  font-size: clamp(1rem, 1vw, 1.4rem);
   letter-spacing: 0.32em;
-  text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .heading {
+  font-family: var(--font-hebrew);
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 2.25rem;
 }
 
 .body {
+  font-family: var(--font-hebrew);
   font-size: clamp(1rem, 1.4vw, 1.2rem);
   line-height: 1.9;
   color: #6b3a44;
   font-weight: 300;
+}
+
+.body + .body {
+  margin-top: 1.5rem;
 }

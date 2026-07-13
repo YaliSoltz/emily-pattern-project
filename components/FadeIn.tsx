@@ -8,6 +8,8 @@ type FadeInProps = {
   className?: string;
   /** delay in ms before the reveal transition starts */
   delay?: number;
+  dir?: "ltr" | "rtl";
+  lang?: string;
 };
 
 export default function FadeIn({
@@ -15,6 +17,8 @@ export default function FadeIn({
   as: Tag = "div",
   className = "",
   delay = 0,
+  dir,
+  lang,
 }: FadeInProps) {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
@@ -44,6 +48,8 @@ export default function FadeIn({
       ref={ref}
       className={`reveal ${visible ? "is-visible" : ""} ${className}`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      dir={dir}
+      lang={lang}
     >
       {children}
     </Tag>

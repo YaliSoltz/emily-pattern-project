@@ -46,7 +46,7 @@ export default function GalleryCarousel() {
       <div className="container">
         <FadeIn className={styles.head}>
           <p className={styles.eyebrow}>The Collection</p>
-          <h2 className={styles.heading}>Selected prints</h2>
+          <h2 className={styles.heading}>Selected Patterns</h2>
         </FadeIn>
       </div>
 
@@ -98,7 +98,6 @@ export default function GalleryCarousel() {
       <div className="container">
         <div className={styles.controls}>
           <div className={styles.captionRow}>
-            <span className={styles.caption}>{slides[index].caption}</span>
             <span className={styles.count}>
               {String(index + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
             </span>
@@ -220,7 +219,9 @@ export default function GalleryCarousel() {
             &rarr;
           </button>
 
-          <p className={styles.zoomCaption}>{slides[index].caption}</p>
+          <p className={styles.zoomCaption}>
+            {String(index + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+          </p>
         </div>
       )}
     </section>

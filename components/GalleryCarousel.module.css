@@ -13,7 +13,7 @@
 .eyebrow {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 0.72rem;
+  font-size: clamp(1rem, 1vw, 1.4rem);
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--muted);
@@ -22,7 +22,7 @@
 
 .heading {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* ---- viewport / track ---- */
@@ -95,16 +95,9 @@
   gap: 1.5rem;
 }
 
-.caption {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  color: var(--ink);
-}
-
 .count {
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: clamp(0.72rem, 0.72vw, 1.08rem);
   letter-spacing: 0.28em;
   color: var(--muted);
 }
@@ -121,7 +114,7 @@
   color: var(--ink);
   width: 3rem;
   height: 3rem;
-  font-size: 1rem;
+  font-size: clamp(1rem, 1vw, 1.3rem);
   cursor: pointer;
   transition: background 0.5s var(--ease), color 0.5s var(--ease),
     border-color 0.5s var(--ease), opacity 0.4s var(--ease);
@@ -199,7 +192,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(26, 11, 15, 0.96);
+  background: rgba(51, 22, 30);
   animation: zoomFadeIn 0.4s var(--ease) forwards;
 }
 
@@ -214,7 +207,7 @@
   color: #f7f2ea;
   width: 2.75rem;
   height: 2.75rem;
-  font-size: 1.5rem;
+  font-size: clamp(1.5rem, 1.5vw, 1.95rem);
   line-height: 1;
   cursor: pointer;
   transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
@@ -236,7 +229,7 @@
   color: #f7f2ea;
   width: 3rem;
   height: 3rem;
-  font-size: 1.1rem;
+  font-size: clamp(1.1rem, 1.1vw, 1.43rem);
   cursor: pointer;
   transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
 }
@@ -277,13 +270,14 @@
   height: min(40vh, 30vw);
   width: auto;
   aspect-ratio: 1 / 1;
+  align-self: flex-end;
   background: var(--line);
 }
 
 .zoomCaption {
   margin-top: clamp(1rem, 3vh, 1.75rem);
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: clamp(0.72rem, 0.72vw, 1.08rem);
   letter-spacing: 0.28em;
   color: rgba(247, 242, 234, 0.75);
 }
